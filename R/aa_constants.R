@@ -1,0 +1,14 @@
+MEAN_TROPICAL_YEAR <- 365.242189
+MEAN_SIDEREAL_YEAR <- 365.25636
+MEAN_SYNODIC_MONTH <- 29.530588861
+
+SPRING <- 0
+SUMMER <- 90
+AUTUMN <- 180
+WINTER <- 270
+
+# Moon phases
+NEW <- 0 # New moon
+FIRST_QUARTER <- 90 # First quarter moon
+FULL <- 180 # Full moon
+LAST_QUARTER <- 270 # Last quarter moon
