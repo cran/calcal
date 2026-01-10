@@ -25,7 +25,11 @@ fixed_from_observational_islamic <- function(i_date) {
     floor(((i_date$year - 1) * 12 + i_date$month - 1 / 2) * MEAN_SYNODIC_MONTH)
 
   # First day of month.
-  phasis_on_or_before(midmonth, ISLAMIC_LOCATION) + i_date$day - 1
+  out <- rep(NA_integer_, length(midmonth))
+  miss <- is.na(midmonth)
+  out[!miss] <- phasis_on_or_before(midmonth[!miss], ISLAMIC_LOCATION) +
+    i_date$day[!miss] - 1
+  out
 }
 
 observational_islamic_from_fixed <- function(date) {
@@ -33,9 +37,10 @@ observational_islamic_from_fixed <- function(date) {
   # Observational Islamic date (year month day)
   # corresponding to fixed date.
   date <- vec_data(date)
-
+  miss <- is.na(date)
   # Most recent new moon.
-  crescent <- phasis_on_or_before(date, ISLAMIC_LOCATION)
+  crescent <- rep(NA_real_, length(date))
+  crescent[!miss] <- phasis_on_or_before(date[!miss], ISLAMIC_LOCATION)
 
   elapsed_months <- round((crescent - ISLAMIC_EPOCH) / MEAN_SYNODIC_MONTH)
   year <- 1 + floor(elapsed_months / 12)
@@ -54,15 +59,22 @@ fixed_from_saudi_islamic <- function(s_date) {
     floor(((s_date$year - 1) * 12 + s_date$month - 1 / 2) * MEAN_SYNODIC_MONTH)
 
   # First day of month.
-  saudi_new_month_on_or_before(midmonth) + s_date$day - 1
+  out <- rep(NA_integer_, length(midmonth))
+  miss <- is.na(midmonth)
+  out[!miss] <- saudi_new_month_on_or_before(midmonth[!miss]) +
+    s_date$day[!miss] -
+    1
+  out
 }
 
 saudi_islamic_from_fixed <- function(date) {
   # TYPE fixed-date -> islamic-date
   # Saudi Islamic date (year month day) corresponding to fixed date.
   date <- vec_data(date)
+  miss <- is.na(date)
   # Most recent new month.
-  crescent <- saudi_new_month_on_or_before(date)
+  crescent <- rep(NA_real_, length(date))
+  crescent[!miss] <- saudi_new_month_on_or_before(date[!miss])
 
   elapsed_months <- round((crescent - ISLAMIC_EPOCH) / MEAN_SYNODIC_MONTH)
   year <- 1 + floor(elapsed_months / 12)
@@ -75,16 +87,21 @@ saudi_islamic_from_fixed <- function(date) {
 fixed_from_observational_hebrew <- function(h_date) {
   # TYPE hebrew-date -> fixed-date
   # Fixed date equivalent to Observational Hebrew date.
+  miss <- is.na(h_date$year) | is.na(h_date$month) | is.na(h_date$day)
   year1 <- h_date$year - (h_date$month >= TISHRI)
   start <- vec_data(hebrew_date(year1, NISAN, 1))
   g_year <- gregorian_year_from_fixed(start + 60)
-  new_year <- observational_hebrew_first_of_nisan(g_year)
+  new_year <- rep(NA_real_, length(g_year))
+  new_year[!miss] <- observational_hebrew_first_of_nisan(g_year[!miss])
 
   # Middle of given month.
   midmonth <- new_year + round(29.5 * (h_date$month - 1)) + 15
 
   # First day of month.
-  phasis_on_or_before(midmonth, HEBREW_LOCATION) + h_date$day - 1
+  out <- rep(NA_integer_, length(midmonth))
+  out[!miss] <- phasis_on_or_before(midmonth[!miss], HEBREW_LOCATION) +
+    h_date$day[!miss] - 1
+  out
 }
 
 observational_hebrew_from_fixed <- function(date) {
@@ -92,16 +109,19 @@ observational_hebrew_from_fixed <- function(date) {
   # Observational Hebrew date (year month day)
   # corresponding to fixed date.
   date <- vec_data(date)
+  miss <- is.na(date)
   # Most recent new moon.
-  crescent <- phasis_on_or_before(date, HEBREW_LOCATION)
+  crescent <- rep(NA_real_, length(date))
+  crescent[!miss] <- phasis_on_or_before(date[!miss], HEBREW_LOCATION)
 
   g_year <- gregorian_year_from_fixed(date)
-  ny <- observational_hebrew_first_of_nisan(g_year)
+  ny <- rep(NA_real_, length(g_year))
+  ny[!miss] <- observational_hebrew_first_of_nisan(g_year[!miss])
 
   new_year <- ny
   if (any(date < ny, na.rm = TRUE)) {
-    new_year[date < ny] <- observational_hebrew_first_of_nisan(
-      g_year[date < ny] - 1
+    new_year[date < ny & !miss] <- observational_hebrew_first_of_nisan(
+      g_year[date < ny & !miss] - 1
     )
   }
 
@@ -118,13 +138,15 @@ samaritan_from_fixed <- function(date) {
   # TYPE fixed-date -> hebrew-date
   # Samaritan date corresponding to fixed date.
   date <- vec_data(date)
+  miss <- is.na(date)
+  moon <- new_year <- rep(NA_real_, length(date))
   # First of month
-  moon <- nth_new_moon(
+  moon[!miss] <- nth_new_moon(
     samaritan_new_moon_at_or_before(
-      samaritan_noon(date)
+      samaritan_noon(date[!miss])
     )
   )
-  new_year <- samaritan_new_year_on_or_before(moon)
+  new_year[!miss] <- samaritan_new_year_on_or_before(moon[!miss])
   month <- 1 + round((moon - new_year) / 29.5)
   year <- round((new_year - SAMARITAN_EPOCH) / 365.25) +
     ceiling((month - 5) / 8)
@@ -136,15 +158,20 @@ samaritan_from_fixed <- function(date) {
 fixed_from_samaritan <- function(s_date) {
   # TYPE hebrew-date -> fixed-date
   # Fixed date of Samaritan date.
-  ny <- samaritan_new_year_on_or_before(
+  miss <- is.na(s_date$year) | is.na(s_date$month) | is.na(s_date$day)
+  ny <- nm <- out <- rep(NA_real_, length(s_date$year))
+  ny[!miss] <- samaritan_new_year_on_or_before(
     floor(
       SAMARITAN_EPOCH +
         50 +
-        365.25 * (s_date$year - ceiling((s_date$month - 5) / 8))
+        365.25 * (s_date$year[!miss] - ceiling((s_date$month[!miss] - 5) / 8))
     )
   )
-  nm <- samaritan_new_moon_at_or_before(ny + 29.5 * (s_date$month - 1) + 15)
-  round(nth_new_moon(nm) + s_date$day - 1)
+  nm[!miss] <- samaritan_new_moon_at_or_before(
+    ny[!miss] + 29.5 * (s_date$month[!miss] - 1) + 15
+  )
+  out[!miss] <- round(nth_new_moon(nm[!miss]) + s_date$day[!miss] - 1)
+  out
 }
 
 
@@ -201,6 +228,7 @@ cal_samaritan <- new_calendar(
 )
 
 #' @rdname islamic
+#' @export
 oislamic_date <- function(
   year = integer(),
   month = integer(),
@@ -210,31 +238,37 @@ oislamic_date <- function(
 }
 
 #' @rdname islamic
+#' @export
 as_oislamic <- function(date) {
   as_date(date, calendar = cal_oislamic)
 }
 
 #' @rdname islamic
+#' @export
 saudi_date <- function(year = integer(), month = integer(), day = integer()) {
   new_date(year = year, month = month, day = day, calendar = cal_saudi)
 }
 
 #' @rdname islamic
+#' @export
 as_saudi <- function(date) {
   as_date(date, calendar = cal_saudi)
 }
 
 #' @rdname hebrew
+#' @export
 ohebrew_date <- function(year = integer(), month = integer(), day = integer()) {
   new_date(year = year, month = month, day = day, calendar = cal_ohebrew)
 }
 
 #' @rdname hebrew
+#' @export
 as_ohebrew <- function(date) {
   as_date(date, calendar = cal_ohebrew)
 }
 
 #' @rdname hebrew
+#' @export
 samaritan_date <- function(
   year = integer(),
   month = integer(),
@@ -244,6 +278,7 @@ samaritan_date <- function(
 }
 
 #' @rdname hebrew
+#' @export
 as_samaritan <- function(date) {
   as_date(date, calendar = cal_samaritan)
 }
@@ -308,7 +343,6 @@ observational_hebrew_first_of_nisan <- function(g_year) {
     rep(HEBREW_LOCATION, length(g_year))
   ) +
     floor(equinox)
-
   phasis_on_or_after(
     floor(equinox) - 13 - as.numeric(equinox < set),
     HEBREW_LOCATION
@@ -545,6 +579,6 @@ phasis_on_or_after <- function(date, location) {
     tau[not_visible] <- moon[not_visible] + 29 # Next new moon
   }
   next_value(tau, function(x) {
-    visible_crescent(x, lst$location)
+    visible_crescent(x, lst$location[seq_along(x)])
   })
 }

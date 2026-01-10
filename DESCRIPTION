@@ -1,6 +1,6 @@
 Package: calcal
 Title: Calendrical Calculations
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
   person("Rob", "Hyndman", email="Rob.Hyndman@monash.edu", role=c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-2140-5352")),
   person("Edward","Reingold", role = c("cph", "ctb"), comment = "Original Lisp code"),
@@ -13,7 +13,7 @@ Description: An R implementation of the algorithms described in Reingold and
 License: Apache License (>= 2)
 ByteCompile: TRUE
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends: R (>= 4.1.0)
 Imports: vctrs
 Suggests: knitr, rmarkdown, testthat (>= 3.0.0), tibble
@@ -23,11 +23,11 @@ URL: https://pkg.robjhyndman.com/calcal/,
 VignetteBuilder: knitr
 BugReports: https://github.com/robjhyndman/calcal/issues
 NeedsCompilation: no
-Packaged: 2025-07-20 01:48:15 UTC; hyndman
+Packaged: 2026-01-09 23:53:11 UTC; hyndman
 Author: Rob Hyndman [aut, cre, cph] (ORCID:
     <https://orcid.org/0000-0002-2140-5352>),
   Edward Reingold [cph, ctb] (Original Lisp code),
   Nachum Dershowitz [cph, ctb] (Original Lisp code)
 Maintainer: Rob Hyndman <Rob.Hyndman@monash.edu>
 Repository: CRAN
-Date/Publication: 2025-07-22 10:30:31 UTC
+Date/Publication: 2026-01-10 00:10:02 UTC

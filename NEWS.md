@@ -1,3 +1,5 @@
-# calcal 1.0.0
+# calcal 1.0.1
+* Bug fixes
 
+# calcal 1.0.0
 * Initial CRAN submission.

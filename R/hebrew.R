@@ -63,6 +63,9 @@ format_hebrew <- function(x, ...) {
 fixed_from_hebrew <- function(date, ...) {
   days_in_prior_months <- mapply(
     function(mth, yr) {
+      if (is.na(mth) | is.na(yr)) {
+        return(NA_integer_)
+      }
       if (mth < TISHRI) {
         # Before Tishri, add days in months from Tishri to last month of year
         out <- sum(last_day_of_hebrew_month(
