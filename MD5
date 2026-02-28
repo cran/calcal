@@ -1,6 +1,6 @@
-af93011c4c9c7a1e1da608ccb083c6b8 *DESCRIPTION
+bb3a287bbd17b12d02cba9cc5c25548d *DESCRIPTION
 4416a9eb5ad871a0f9e81ba5acc7ee3e *NAMESPACE
-e29400738cedc9ec98c6e8360df083a2 *NEWS.md
+381801307e15a9742a3969c77868c132 *NEWS.md
 81f63f8ed0f9ab2702d72a1417a2cd02 *R/aa_calendar.R
 b0818fc40977265d2fdfebca77177e53 *R/aa_constants.R
 8e8817442ae16b4e1e9bdac5775abc8b *R/aa_locale.R
@@ -44,7 +44,7 @@ cd442781a6b297cf43e4959f33fed722 *build/vignette.rds
 d529528bf3f058dfee65fc0a1a26dafc *inst/COPYRIGHT
 3b8f1db310eb7124aa590a7c12ad141a *inst/doc/new_calendar.R
 2b45aececccb9b670e32a3b9a9e3d232 *inst/doc/new_calendar.Rmd
-0871547faae7662bde5269e5edfc95e6 *inst/doc/new_calendar.html
+3c4c3c44ea76623b539a5a968bc46c08 *inst/doc/new_calendar.html
 356f119af66a35bd74db17dec19902b1 *man/babylonian_date.Rd
 bb04315b3593cefdfe5083cc270504bc *man/bahai.Rd
 c29376a01dd436628387b7cb9a68d37d *man/bahai_new_year.Rd
@@ -92,7 +92,7 @@ c1ff6faf755a0021b6e514041adbc661 *tests/testthat/test-bahai.R
 27136824db4c4a381a2c44e6ce96beec *tests/testthat/test-balinese.R
 7f0c773cefddca7e689590d3500463b7 *tests/testthat/test-chinese.R
 b9a013028bd1eefb2ee5f737ae653b3a *tests/testthat/test-christian.R
-b2e8552497ea0830d94733cf43b2f011 *tests/testthat/test-common.R
+1c649056ad14f5c0eab6a36b50fe11e4 *tests/testthat/test-common.R
 1f4f27edf7f3ee6fddbd6b8803ae0bff *tests/testthat/test-coptic.R
 65cc4d3864deeac360bf6e535210551a *tests/testthat/test-egyptian.R
 2b917f98ec0bbeec5b7023f9e6bbe9dd *tests/testthat/test-empty.R
